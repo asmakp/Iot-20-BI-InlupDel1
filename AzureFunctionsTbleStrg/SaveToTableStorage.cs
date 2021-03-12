@@ -20,8 +20,10 @@ namespace AzureFunctionsTbleStrg
         [return: Table("sensor")]
         public static MessageTable Run([IoTHubTrigger("messages/events", Connection = "IotHubConnection")]EventData message, ILogger log)
         {
+           
             try
             {
+                log.LogInformation($"C# IoT Hub trigger function processed a message: {Encoding.UTF8.GetString(message.Body.Array)}");
                 var payload = JsonConvert.DeserializeObject<MessageTable>(Encoding.UTF8.GetString(message.Body.Array));
                // payload.PartitionKey = message.Properties["type"].ToString(); 
                // payload.RowKey = Guid.NewGuid().ToString();
