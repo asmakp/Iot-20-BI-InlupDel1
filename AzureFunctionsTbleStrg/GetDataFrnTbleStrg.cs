@@ -21,22 +21,14 @@ namespace AzureFunctionsTbleStrg
              [Table("sensor")] CloudTable cloudTable,
             ILogger log)
         {
-           // string limit = req.Query["limit"];
-           // string orderby = req.Query["orderby"];
-
-            //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-           // dynamic data = JsonConvert.DeserializeObject(requestBody);
+          
 
             IEnumerable<MessageTable> results = await cloudTable.ExecuteQuerySegmentedAsync(new TableQuery<MessageTable>(), null);
-            //results = results.OrderBy(ts => ts.Timestamp);
+           
+            //shows the recent 10 messages
             results = results.OrderByDescending(ts => ts.Timestamp).Take<MessageTable>(10);
 
-            //if (orderby == "desc")
-            //    results = results.OrderByDescending(ts => ts.Timestamp);
-
-            //if (limit != null)
-            //    results = results.Take(int.Parse(limit));
-
+           
             return new OkObjectResult(results);
         }
     }

@@ -20,15 +20,15 @@ namespace AzureFunctionsTbleStrg
         [return: Table("sensor")]
         public static MessageTable Run([IoTHubTrigger("messages/events", Connection = "IotHubConnection")]EventData message, ILogger log)
         {
-           
+           //MCU -ESP8266
+           //Sensor - Dual ultrasonic sensor module
             try
             {
                 log.LogInformation($"C# IoT Hub trigger function processed a message: {Encoding.UTF8.GetString(message.Body.Array)}");
+               
                 var payload = JsonConvert.DeserializeObject<MessageTable>(Encoding.UTF8.GetString(message.Body.Array));
-               // payload.PartitionKey = message.Properties["type"].ToString(); 
-               // payload.RowKey = Guid.NewGuid().ToString();
+               
                 var _deviceId = message.SystemProperties["iothub-connection-device-id"].ToString();
-               // var _deviceType = message.Properties["type"].ToString();
                 var _schoolName = message.Properties["SchoolName"].ToString();
                 var _studentName = message.Properties["StudentName"].ToString();
 
