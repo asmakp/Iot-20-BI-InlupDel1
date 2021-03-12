@@ -5,10 +5,10 @@ using System.Text;
 
 namespace AzureFunctionsTbleStrg.Model
 {
-    public class MessageTable
+    public class MessageTable : TableEntity
     {
-        public string PartitionKey {get;set;}
-        public string  RowKey { get; set; }
+       // public string PartitionKey {get;set;}
+       // public string  RowKey { get; set; }
         public double Distance { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }

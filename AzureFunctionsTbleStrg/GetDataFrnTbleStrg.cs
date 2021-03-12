@@ -18,18 +18,18 @@ namespace AzureFunctionsTbleStrg
         [FunctionName("GetDataFrnTbleStrg")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+             [Table("sensor")] CloudTable cloudTable,
             ILogger log)
         {
-            string limit = req.Query["limit"];
-            string orderby = req.Query["orderby"];
+           // string limit = req.Query["limit"];
+           // string orderby = req.Query["orderby"];
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
+            //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+           // dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-          //  IEnumerable<MessageTable> results = await cloudTable.ExecuteQuerySegmentedAsync(new TableQuery<MessageTable>(), null);
-
+            IEnumerable<MessageTable> results = await cloudTable.ExecuteQuerySegmentedAsync(new TableQuery<MessageTable>(), null);
             //results = results.OrderBy(ts => ts.Timestamp);
-           // results = results.OrderByDescending(ts => ts.Timestamp).Take<MessageTable>(10);
+            results = results.OrderByDescending(ts => ts.Timestamp).Take<MessageTable>(10);
 
             //if (orderby == "desc")
             //    results = results.OrderByDescending(ts => ts.Timestamp);
@@ -37,7 +37,7 @@ namespace AzureFunctionsTbleStrg
             //if (limit != null)
             //    results = results.Take(int.Parse(limit));
 
-            return new OkObjectResult(data);
+            return new OkObjectResult(results);
         }
     }
 }
