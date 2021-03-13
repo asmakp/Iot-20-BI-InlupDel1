@@ -55,7 +55,7 @@ void loop() {
     if((currentMillis - prevMillis) >= interval) {
       prevMillis = currentMillis;
 
-      if ((distance <= 40 || distance >= 3) &&(distance > PrevDistance + diff || distance <  PrevDistance - diff)){
+      if ((distance < 40.0 && distance > 2.0) &&(distance > PrevDistance + diff || distance <  PrevDistance - diff)){
           PrevDistance = distance; 
         char payload[256];
         char epochTimeBuf[12];
